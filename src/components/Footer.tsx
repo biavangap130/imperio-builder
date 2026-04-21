@@ -1,7 +1,21 @@
-import { Link } from "@tanstack/react-router";
 import { Phone, Mail, Globe, MapPin } from "lucide-react";
 import { Logo } from "./Logo";
 import { WHATSAPP_URL } from "./WhatsAppButton";
+
+const sections = [
+  { id: "home", label: "Home" },
+  { id: "sobre", label: "Sobre" },
+  { id: "servicos", label: "Serviços" },
+  { id: "diferenciais", label: "Diferenciais" },
+  { id: "contactos", label: "Contactos" },
+];
+
+function scrollTo(id: string) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const top = el.getBoundingClientRect().top + window.scrollY - 80;
+  window.scrollTo({ top, behavior: "smooth" });
+}
 
 export function Footer() {
   return (
@@ -18,11 +32,16 @@ export function Footer() {
         <div>
           <h3 className="text-sm font-semibold uppercase tracking-wider text-brand-gold mb-4">Navegação</h3>
           <ul className="space-y-2 text-sm">
-            <li><Link to="/" className="text-primary-foreground/80 hover:text-brand-gold">Home</Link></li>
-            <li><Link to="/sobre" className="text-primary-foreground/80 hover:text-brand-gold">Sobre</Link></li>
-            <li><Link to="/servicos" className="text-primary-foreground/80 hover:text-brand-gold">Serviços</Link></li>
-            <li><Link to="/diferenciais" className="text-primary-foreground/80 hover:text-brand-gold">Diferenciais</Link></li>
-            <li><Link to="/contactos" className="text-primary-foreground/80 hover:text-brand-gold">Contactos</Link></li>
+            {sections.map((s) => (
+              <li key={s.id}>
+                <button
+                  onClick={() => scrollTo(s.id)}
+                  className="text-primary-foreground/80 hover:text-brand-gold transition-colors"
+                >
+                  {s.label}
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
 

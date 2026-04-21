@@ -50,9 +50,7 @@ export function Header() {
       }`}
     >
       <div className="container mx-auto flex h-16 sm:h-20 items-center justify-between px-4">
-        <button onClick={() => scrollToSection("home")} aria-label="Ir para o topo">
-          <Logo variant="light" />
-        </button>
+        <Logo variant="light" />
 
         <nav className="hidden lg:flex items-center gap-1">
           {navItems.map((item) => (
