@@ -2,7 +2,6 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 
 import appCss from "../styles.css?url";
 import { Toaster } from "@/components/ui/sonner";
-import { useLenis } from "@/hooks/use-lenis";
 
 function NotFoundComponent() {
   return (
@@ -35,9 +34,13 @@ export const Route = createRootRoute({
       { name: "description", content: "Imperio Gest oferece serviços de TIC, Marketing Digital, Formação Profissional, Gestão de Projetos e Infraestrutura Administrativa em Angola." },
       { name: "author", content: "Imperio Gest – Lda" },
       { property: "og:title", content: "Imperio Gest – Soluções Tecnológicas em Angola" },
-      { property: "og:description", content: "Consultoria estratégica, tecnologia, formação e gestão de projetos em Angola." },
+      { property: "og:description", content: "Imperio Gest oferece serviços de TIC, Marketing Digital, Formação Profissional, Gestão de Projetos e Infraestrutura Administrativa em Angola." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "Imperio Gest – Soluções Tecnológicas em Angola" },
+      { name: "twitter:description", content: "Imperio Gest oferece serviços de TIC, Marketing Digital, Formação Profissional, Gestão de Projetos e Infraestrutura Administrativa em Angola." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/0f00e8e9-bab6-44f3-8127-9c109d6b4870" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/0f00e8e9-bab6-44f3-8127-9c109d6b4870" },
     ],
     links: [
       {
@@ -66,7 +69,6 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
-  useLenis();
   return (
     <>
       <Outlet />
