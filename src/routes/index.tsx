@@ -9,6 +9,12 @@ import { Label } from "@/components/ui/label";
 import { SplineScene } from "@/components/SplineScene";
 import { useState } from "react";
 import { toast } from "sonner";
+import { smoothScrollTo } from "@/hooks/use-lenis";
+import serviceTic from "@/assets/service-tic.jpg";
+import serviceMarketing from "@/assets/service-marketing.jpg";
+import serviceFormacao from "@/assets/service-formacao.jpg";
+import serviceProjetos from "@/assets/service-projetos.jpg";
+import serviceInfra from "@/assets/service-infra.jpg";
 import {
   Monitor, Megaphone, GraduationCap, ClipboardList, Building2, Check,
   ArrowRight, Target, Eye, Sparkles, MapPinned, Users, Briefcase,

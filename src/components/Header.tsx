@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import { Logo } from "./Logo";
 import { Button } from "./ui/button";
+import { smoothScrollTo } from "@/hooks/use-lenis";
 
 const navItems = [
   { id: "home", label: "Home" },
@@ -12,13 +13,7 @@ const navItems = [
   { id: "contactos", label: "Contactos" },
 ] as const;
 
-function scrollToSection(id: string) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const headerOffset = 80;
-  const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
-  window.scrollTo({ top, behavior: "smooth" });
-}
+const scrollToSection = (id: string) => smoothScrollTo(id, 80);
 
 export function Header() {
   const [open, setOpen] = useState(false);
