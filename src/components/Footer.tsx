@@ -1,6 +1,7 @@
 import { Phone, Mail, Globe, MapPin } from "lucide-react";
 import { Logo } from "./Logo";
 import { WHATSAPP_URL } from "./WhatsAppButton";
+import { smoothScrollTo } from "@/hooks/use-lenis";
 
 const sections = [
   { id: "home", label: "Home" },
@@ -10,23 +11,16 @@ const sections = [
   { id: "contactos", label: "Contactos" },
 ];
 
-function scrollTo(id: string) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const top = el.getBoundingClientRect().top + window.scrollY - 80;
-  window.scrollTo({ top, behavior: "smooth" });
-}
-
 export function Footer() {
   return (
-    <footer className="bg-brand-navy-deep text-primary-foreground mt-20">
+    <footer className="bg-brand-navy-deep text-white mt-20 border-t border-brand-gold/20">
       <div className="container mx-auto px-4 py-14 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <Logo variant="light" />
-          <p className="mt-4 text-sm text-primary-foreground/70 leading-relaxed">
+          <p className="mt-4 text-sm text-white/85 leading-relaxed">
             Soluções tecnológicas, educativas e corporativas para empresas e instituições em Angola.
           </p>
-          <p className="mt-3 text-xs text-primary-foreground/50">NIF: 5002260964</p>
+          <p className="mt-3 text-xs text-white/60">NIF: 5002260964</p>
         </div>
 
         <div>
@@ -35,8 +29,8 @@ export function Footer() {
             {sections.map((s) => (
               <li key={s.id}>
                 <button
-                  onClick={() => scrollTo(s.id)}
-                  className="text-primary-foreground/80 hover:text-brand-gold transition-colors"
+                  onClick={() => smoothScrollTo(s.id)}
+                  className="text-white/85 hover:text-brand-gold transition-colors"
                 >
                   {s.label}
                 </button>
@@ -50,15 +44,15 @@ export function Footer() {
           <ul className="space-y-3 text-sm">
             <li className="flex items-start gap-2">
               <Phone className="h-4 w-4 mt-0.5 text-brand-gold shrink-0" />
-              <a href="tel:+244976033941" className="text-primary-foreground/80 hover:text-brand-gold">+244 976 033 941 / 942</a>
+              <a href="tel:+244976033941" className="text-white/90 hover:text-brand-gold">+244 976 033 941 / 942</a>
             </li>
             <li className="flex items-start gap-2">
               <Mail className="h-4 w-4 mt-0.5 text-brand-gold shrink-0" />
-              <a href="mailto:geral@imperiogest.com" className="text-primary-foreground/80 hover:text-brand-gold">geral@imperiogest.com</a>
+              <a href="mailto:geral@imperiogest.com" className="text-white/90 hover:text-brand-gold">geral@imperiogest.com</a>
             </li>
             <li className="flex items-start gap-2">
               <Globe className="h-4 w-4 mt-0.5 text-brand-gold shrink-0" />
-              <span className="text-primary-foreground/80">www.imperiogest.com</span>
+              <span className="text-white/90">www.imperiogest.com</span>
             </li>
             <li>
               <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-2 px-4 py-2 rounded-md bg-brand-whatsapp text-white text-sm font-medium hover:brightness-110 transition">
@@ -70,16 +64,16 @@ export function Footer() {
 
         <div>
           <h3 className="text-sm font-semibold uppercase tracking-wider text-brand-gold mb-4">Sedes</h3>
-          <ul className="space-y-3 text-sm text-primary-foreground/80">
-            <li className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 text-brand-gold shrink-0" /><span><strong className="text-primary-foreground">Luanda:</strong> Maianga, Largo das Escolas, junto à União dos Escritores Angolanos</span></li>
-            <li className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 text-brand-gold shrink-0" /><span><strong className="text-primary-foreground">Huambo:</strong> Rua Heróis de Ocupação, n.º 15, Bairro Académico</span></li>
-            <li className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 text-brand-gold shrink-0" /><span><strong className="text-primary-foreground">Benguela:</strong> Rua Aires de Almeida Santos, n.º 4448, Bairro do Capanda</span></li>
+          <ul className="space-y-3 text-sm text-white/85">
+            <li className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 text-brand-gold shrink-0" /><span><strong className="text-white">Luanda:</strong> Maianga, Largo das Escolas, junto à União dos Escritores Angolanos</span></li>
+            <li className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 text-brand-gold shrink-0" /><span><strong className="text-white">Huambo:</strong> Rua Heróis de Ocupação, n.º 15, Bairro Académico</span></li>
+            <li className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 text-brand-gold shrink-0" /><span><strong className="text-white">Benguela:</strong> Rua Aires de Almeida Santos, n.º 4448, Bairro do Capanda</span></li>
           </ul>
         </div>
       </div>
 
-      <div className="border-t border-primary-foreground/10">
-        <div className="container mx-auto px-4 py-5 text-center text-xs text-primary-foreground/60">
+      <div className="border-t border-white/10">
+        <div className="container mx-auto px-4 py-5 text-center text-xs text-white/70">
           © {new Date().getFullYear()} Imperio Gest – Prestação de Serviços, Lda. Todos os direitos reservados.
         </div>
       </div>
