@@ -1,54 +1,90 @@
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import { Logo } from "./Logo";
 import { Button } from "./ui/button";
 
 const navItems = [
-  { to: "/", label: "Home" },
-  { to: "/sobre", label: "Sobre" },
-  { to: "/servicos", label: "Serviços" },
-  { to: "/diferenciais", label: "Diferenciais" },
-  { to: "/contactos", label: "Contactos" },
+  { id: "home", label: "Home" },
+  { id: "sobre", label: "Sobre" },
+  { id: "servicos", label: "Serviços" },
+  { id: "diferenciais", label: "Diferenciais" },
+  { id: "contactos", label: "Contactos" },
 ] as const;
+
+function scrollToSection(id: string) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const headerOffset = 80;
+  const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+  window.scrollTo({ top, behavior: "smooth" });
+}
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("home");
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 20);
+      const y = window.scrollY + 120;
+      let current = "home";
+      for (const item of navItems) {
+        const el = document.getElementById(item.id);
+        if (el && el.offsetTop <= y) current = item.id;
+      }
+      setActive(current);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur-md">
+    <header
+      className={`sticky top-0 z-40 w-full transition-all duration-300 ${
+        scrolled
+          ? "border-b border-border/60 bg-background/90 backdrop-blur-xl shadow-[var(--shadow-card)]"
+          : "border-b border-transparent bg-background/40 backdrop-blur-md"
+      }`}
+    >
       <div className="container mx-auto flex h-16 sm:h-20 items-center justify-between px-4">
-        <Logo />
+        <button onClick={() => scrollToSection("home")} aria-label="Ir para o topo">
+          <Logo variant="light" />
+        </button>
 
         <nav className="hidden lg:flex items-center gap-1">
           {navItems.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className="px-4 py-2 text-sm font-medium text-foreground/80 rounded-md transition-colors hover:text-primary hover:bg-secondary"
-              activeOptions={{ exact: item.to === "/" }}
-              activeProps={{ className: "px-4 py-2 text-sm font-semibold rounded-md text-primary bg-secondary" }}
+            <button
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              className={`px-4 py-2 text-sm rounded-md transition-all ${
+                active === item.id
+                  ? "text-brand-gold font-semibold bg-brand-gold/10"
+                  : "text-foreground/80 font-medium hover:text-brand-gold hover:bg-secondary/60"
+              }`}
             >
               {item.label}
-            </Link>
+            </button>
           ))}
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
           <a
             href="tel:+244976033941"
-            className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+            className="flex items-center gap-2 text-sm font-medium text-foreground/80 hover:text-brand-gold transition-colors"
           >
             <Phone className="h-4 w-4" />
             +244 976 033 941
           </a>
-          <Button asChild variant="hero" size="sm">
-            <Link to="/contactos">Solicitar orçamento</Link>
+          <Button onClick={() => scrollToSection("contactos")} variant="hero" size="sm">
+            Solicitar orçamento
           </Button>
         </div>
 
         <button
-          className="lg:hidden p-2 rounded-md text-foreground hover:bg-secondary"
+          className="lg:hidden p-2 rounded-md text-foreground hover:bg-secondary/60"
           onClick={() => setOpen(!open)}
           aria-label="Abrir menu"
         >
@@ -57,22 +93,33 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="lg:hidden border-t border-border bg-background">
+        <div className="lg:hidden border-t border-border bg-background/95 backdrop-blur-xl">
           <nav className="container mx-auto flex flex-col px-4 py-4 gap-1">
             {navItems.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                onClick={() => setOpen(false)}
-                className="px-4 py-3 rounded-md text-base font-medium text-foreground hover:bg-secondary"
-                activeOptions={{ exact: item.to === "/" }}
-                activeProps={{ className: "px-4 py-3 rounded-md text-base font-semibold text-primary bg-secondary" }}
+              <button
+                key={item.id}
+                onClick={() => {
+                  setOpen(false);
+                  setTimeout(() => scrollToSection(item.id), 50);
+                }}
+                className={`px-4 py-3 text-left rounded-md text-base ${
+                  active === item.id
+                    ? "font-semibold text-brand-gold bg-brand-gold/10"
+                    : "font-medium text-foreground hover:bg-secondary/60"
+                }`}
               >
                 {item.label}
-              </Link>
+              </button>
             ))}
-            <Button asChild variant="hero" className="mt-2">
-              <Link to="/contactos" onClick={() => setOpen(false)}>Solicitar orçamento</Link>
+            <Button
+              variant="hero"
+              className="mt-2"
+              onClick={() => {
+                setOpen(false);
+                setTimeout(() => scrollToSection("contactos"), 50);
+              }}
+            >
+              Solicitar orçamento
             </Button>
           </nav>
         </div>
