@@ -2,6 +2,7 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 
 import appCss from "../styles.css?url";
 import { Toaster } from "@/components/ui/sonner";
+import { useLenis } from "@/hooks/use-lenis";
 
 function NotFoundComponent() {
   return (
@@ -65,6 +66,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  useLenis();
   return (
     <>
       <Outlet />
