@@ -51,6 +51,7 @@ const valores = [
 const servicos = [
   {
     icon: Monitor,
+    image: serviceTic,
     title: "Tecnologia de Informação e Comunicação (TIC)",
     highlight: "Consultoria e implementação de soluções tecnológicas para aumentar a produtividade.",
     items: [
@@ -64,6 +65,7 @@ const servicos = [
   },
   {
     icon: Megaphone,
+    image: serviceMarketing,
     title: "Marketing Digital e Comunicação",
     highlight: "Posicionamento digital completo na internet e nas redes sociais.",
     items: [
@@ -75,6 +77,7 @@ const servicos = [
   },
   {
     icon: GraduationCap,
+    image: serviceFormacao,
     title: "Formação e Capacitação Profissional",
     highlight: "Desenvolvimento de pessoas e equipas para resultados melhores.",
     items: [
@@ -86,6 +89,7 @@ const servicos = [
   },
   {
     icon: ClipboardList,
+    image: serviceProjetos,
     title: "Gestão de Projetos e Programas",
     highlight: "Metodologia profissional (MPI) para projetos de alta complexidade.",
     items: [
@@ -97,6 +101,7 @@ const servicos = [
   },
   {
     icon: Building2,
+    image: serviceInfra,
     title: "Infraestrutura Administrativa e Logística",
     highlight: "Apoio à infraestrutura e rotina administrativa das organizações.",
     items: [
@@ -123,12 +128,7 @@ const sedes = [
   { cidade: "Benguela", endereco: "Rua Aires de Almeida Santos, n.º 4448, Bairro do Capanda — Benguela" },
 ];
 
-function scrollToSection(id: string) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const top = el.getBoundingClientRect().top + window.scrollY - 80;
-  window.scrollTo({ top, behavior: "smooth" });
-}
+const scrollToSection = (id: string) => smoothScrollTo(id, 80);
 
 function HomePage() {
   return (
