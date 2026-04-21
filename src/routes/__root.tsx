@@ -1,6 +1,7 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -29,14 +30,13 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Imperio Gest – Soluções Tecnológicas em Angola" },
+      { name: "description", content: "Imperio Gest oferece serviços de TIC, Marketing Digital, Formação Profissional, Gestão de Projetos e Infraestrutura Administrativa em Angola." },
+      { name: "author", content: "Imperio Gest – Lda" },
+      { property: "og:title", content: "Imperio Gest – Soluções Tecnológicas em Angola" },
+      { property: "og:description", content: "Consultoria estratégica, tecnologia, formação e gestão de projetos em Angola." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
@@ -65,5 +65,10 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
-  return <Outlet />;
+  return (
+    <>
+      <Outlet />
+      <Toaster richColors position="top-center" />
+    </>
+  );
 }
