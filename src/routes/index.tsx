@@ -9,6 +9,12 @@ import { Label } from "@/components/ui/label";
 import { SplineScene } from "@/components/SplineScene";
 import { useState } from "react";
 import { toast } from "sonner";
+import { smoothScrollTo } from "@/hooks/use-lenis";
+import serviceTic from "@/assets/service-tic.jpg";
+import serviceMarketing from "@/assets/service-marketing.jpg";
+import serviceFormacao from "@/assets/service-formacao.jpg";
+import serviceProjetos from "@/assets/service-projetos.jpg";
+import serviceInfra from "@/assets/service-infra.jpg";
 import {
   Monitor, Megaphone, GraduationCap, ClipboardList, Building2, Check,
   ArrowRight, Target, Eye, Sparkles, MapPinned, Users, Briefcase,
@@ -45,6 +51,7 @@ const valores = [
 const servicos = [
   {
     icon: Monitor,
+    image: serviceTic,
     title: "Tecnologia de Informação e Comunicação (TIC)",
     highlight: "Consultoria e implementação de soluções tecnológicas para aumentar a produtividade.",
     items: [
@@ -58,6 +65,7 @@ const servicos = [
   },
   {
     icon: Megaphone,
+    image: serviceMarketing,
     title: "Marketing Digital e Comunicação",
     highlight: "Posicionamento digital completo na internet e nas redes sociais.",
     items: [
@@ -69,6 +77,7 @@ const servicos = [
   },
   {
     icon: GraduationCap,
+    image: serviceFormacao,
     title: "Formação e Capacitação Profissional",
     highlight: "Desenvolvimento de pessoas e equipas para resultados melhores.",
     items: [
@@ -80,6 +89,7 @@ const servicos = [
   },
   {
     icon: ClipboardList,
+    image: serviceProjetos,
     title: "Gestão de Projetos e Programas",
     highlight: "Metodologia profissional (MPI) para projetos de alta complexidade.",
     items: [
@@ -91,6 +101,7 @@ const servicos = [
   },
   {
     icon: Building2,
+    image: serviceInfra,
     title: "Infraestrutura Administrativa e Logística",
     highlight: "Apoio à infraestrutura e rotina administrativa das organizações.",
     items: [
@@ -117,12 +128,7 @@ const sedes = [
   { cidade: "Benguela", endereco: "Rua Aires de Almeida Santos, n.º 4448, Bairro do Capanda — Benguela" },
 ];
 
-function scrollToSection(id: string) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const top = el.getBoundingClientRect().top + window.scrollY - 80;
-  window.scrollTo({ top, behavior: "smooth" });
-}
+const scrollToSection = (id: string) => smoothScrollTo(id, 80);
 
 function HomePage() {
   return (
@@ -270,29 +276,52 @@ function ServicosSection() {
       <div className="container mx-auto px-4 max-w-6xl">
         <SectionHeader eyebrow="O que fazemos" title="Cinco áreas de atuação integradas" />
 
-        <div className="space-y-6">
-          {servicos.map((s, i) => (
-            <div
-              key={s.title}
-              className="rounded-2xl border border-border bg-card p-6 sm:p-8 hover:border-brand-gold/50 hover:shadow-[var(--shadow-elegant)] transition-all"
-            >
-              <div className="flex flex-col md:flex-row gap-6">
-                <div className="shrink-0">
-                  <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-brand-gold to-brand-gold-light flex items-center justify-center shadow-[var(--shadow-gold)]">
-                    <s.icon className="h-7 w-7 text-brand-navy-deep" />
+        <div className="space-y-16">
+          {servicos.map((s, i) => {
+            const reverse = i % 2 === 1;
+            return (
+              <div
+                key={s.title}
+                className={`grid lg:grid-cols-2 gap-8 lg:gap-12 items-center ${
+                  reverse ? "lg:[&>*:first-child]:order-2" : ""
+                }`}
+              >
+                {/* Image */}
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/20 to-brand-teal/20 rounded-3xl blur-2xl opacity-60 group-hover:opacity-90 transition-opacity" />
+                  <div className="relative overflow-hidden rounded-3xl border border-brand-gold/20 shadow-[var(--shadow-elegant)]">
+                    <img
+                      src={s.image}
+                      alt={s.title}
+                      width={1024}
+                      height={768}
+                      loading="lazy"
+                      className="w-full h-[280px] sm:h-[340px] lg:h-[400px] object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-brand-navy-deep/70 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute top-4 left-4 h-12 w-12 rounded-2xl bg-gradient-to-br from-brand-gold to-brand-gold-light flex items-center justify-center shadow-[var(--shadow-gold)]">
+                      <s.icon className="h-6 w-6 text-brand-navy-deep" />
+                    </div>
+                    <div className="absolute bottom-4 left-4 text-xs font-semibold tracking-widest text-white/90 uppercase">
+                      0{i + 1} — Área de atuação
+                    </div>
                   </div>
                 </div>
-                <div className="flex-1">
-                  <p className="text-xs font-semibold tracking-widest text-brand-gold uppercase mb-2">
-                    0{i + 1} — Área de atuação
+
+                {/* Text */}
+                <div>
+                  <p className="text-xs font-semibold tracking-widest text-brand-gold uppercase mb-3">
+                    Serviço 0{i + 1}
                   </p>
-                  <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2">{s.title}</h3>
-                  <p className="text-muted-foreground italic mb-4 border-l-2 border-brand-gold pl-4">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 leading-tight">
+                    {s.title}
+                  </h3>
+                  <p className="text-foreground/75 italic mb-6 border-l-2 border-brand-gold pl-4 text-base">
                     {s.highlight}
                   </p>
-                  <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2">
+                  <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-3">
                     {s.items.map((item) => (
-                      <li key={item} className="flex items-start gap-2 text-sm text-foreground/85">
+                      <li key={item} className="flex items-start gap-2 text-sm text-foreground/90">
                         <Check className="h-4 w-4 text-brand-gold mt-0.5 shrink-0" />
                         <span>{item}</span>
                       </li>
@@ -300,8 +329,8 @@ function ServicosSection() {
                   </ul>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
